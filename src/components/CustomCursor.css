@@ -1,0 +1,76 @@
+
+
+/* Premium Mouse Follower */
+.mouse-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 9999;
+  
+  /* Movement Dynamic Glow Variable */
+  --glow-scale: 0;
+  
+  /* Transparent center, thin border */
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  
+  /* Layered Shadows: Crisp Inner, Medium Soft White, Large Diffused Blue Halo */
+  box-shadow: 
+    inset 0 0 4px rgba(255, 255, 255, 0.6), 
+    0 0 8px rgba(255, 255, 255, 0.3), 
+    0 0 calc(24px + var(--glow-scale) * 16px) rgba(30, 94, 255, calc(0.2 + var(--glow-scale) * 0.15));
+    
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, width, height, opacity, box-shadow;
+  
+  /* Smooth transitions */
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.3s ease, 
+              border-width 0.3s ease,
+              box-shadow 0.4s ease;
+}
+
+/* Idle State */
+.mouse-follower.idle {
+}
+
+/* Hover States */
+.mouse-follower.state-button,
+.mouse-follower.state-nav,
+.mouse-follower.state-image {
+  box-shadow: 
+    inset 0 0 6px rgba(255, 255, 255, 0.8), 
+    0 0 12px rgba(255, 255, 255, 0.5), 
+    0 0 calc(35px + var(--glow-scale) * 16px) rgba(30, 94, 255, calc(0.35 + var(--glow-scale) * 0.15));
+}
+
+.mouse-follower.state-button {
+  width: 40px !important;
+  height: 40px !important;
+  border-color: rgba(255, 255, 255, 0.95);
+}
+
+.mouse-follower.state-nav {
+  width: 30px !important;
+  height: 30px !important;
+  border-width: 1.5px;
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.mouse-follower.state-image {
+  width: 50px !important;
+  height: 50px !important;
+  border-color: rgba(255, 255, 255, 0.8);
+}

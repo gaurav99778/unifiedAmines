@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;400&display=swap');
+
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.greeting-wrapper {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.greeting-text {
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, "Segoe UI", Arial, sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 500;
+  color: #ffffff;
+  position: absolute;
+  opacity: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  will-change: transform, opacity, filter, clip-path;
+  white-space: nowrap;
+}
+
+.unified-amines-wrapper {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.unified-amines-text {
+  font-family: 'Antonio', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  word-spacing: 0.4em;
+  will-change: transform, opacity, filter, letter-spacing;
+  transform-origin: center center;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.char-custom {
+  font-weight: 100;
+  font-size: 1.15em;
+  display: inline-block;
+  transform: translateY(2px);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.unified-amines-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  z-index: 2;
+  will-change: left;
+}
+
+.energy-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0px;
+  height: 2px;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 14;
+  overflow: hidden;
+  will-change: width, height, border-radius, opacity;
+}
+

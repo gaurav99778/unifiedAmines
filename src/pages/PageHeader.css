@@ -1,0 +1,67 @@
+.page-wrapper {
+  padding-top: 0; /* Remove padding to allow hero to be full bleed under navbar */
+  min-height: 100vh;
+}
+
+.pt-32 {
+  padding-top: 8rem;
+}
+
+.page-hero {
+  position: relative;
+  height: 85vh; /* Taller cinematic height */
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; - Removed to prevent jank, we can do parallax in GSAP if needed */
+}
+
+/* Premium Dark Overlay */
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(4, 11, 20, 0.6) 100%), /* Vignette */
+              linear-gradient(to bottom, rgba(4, 11, 20, 0.4) 0%, rgba(4, 11, 20, 0.85) 100%); /* Deep base */
+  backdrop-filter: grayscale(20%); /* Slight desaturation of the background */
+  z-index: 1;
+}
+
+.page-hero-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Extra padding to push it away from the edges and give breathing room */
+  padding-left: 2rem;
+  padding-top: 4rem; 
+}
+
+.page-hero-text-wrapper {
+  max-width: 800px; /* Reduced width for readability */
+}
+
+.relative {
+  position: relative;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 7vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 2rem;
+  color: var(--text-diamond);
+}
+
+.page-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  color: var(--text-silver);
+  font-weight: 300;
+  line-height: 1.6;
+}

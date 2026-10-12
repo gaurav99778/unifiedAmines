@@ -1,0 +1,158 @@
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  min-height: clamp(500px, 100vh, 1000px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-wrapper {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin-top: 150px;
+  padding-left: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  flex: 1 1 min(600px, 100%);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  color: var(--text-silver);
+  max-width: 720px;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.hero-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.mobile-break {
+  display: none;
+}
+.desktop-break {
+  display: block;
+}
+
+@media (max-width: 1440px) {
+  .hero-wrapper {
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-section {
+    min-height: 80vh;
+  }
+  .hero-wrapper {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .hero-content {
+    flex: none;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-break {
+    display: block;
+  }
+  .desktop-break {
+    display: block;
+  }
+
+  .hero-section {
+    padding-top: 140px;
+    padding-bottom: 4rem;
+    min-height: auto;
+  }
+
+  .hero-wrapper {
+    margin-top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .hero-content {
+    flex: none;
+    width: 100%;
+    max-width: 520px;
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: clamp(2.3rem, 10vw, 3.2rem);
+    line-height: 1.15;
+    word-break: keep-all;
+    letter-spacing: -0.5px;
+    max-width: 90%;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    max-width: 280px;
+    line-height: 1.5;
+    margin-top: 1.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 3.5rem;
+    gap: 1.2rem;
+  }
+
+  .hero-actions .magnetic-btn,
+  .hero-actions .primary-btn,
+  .hero-actions .secondary-btn {
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+    padding: 1rem 2rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-section {
+    padding-top: 120px;
+  }
+  .hero-title {
+    font-size: clamp(2.4rem, 13vw, 3rem);
+  }
+}

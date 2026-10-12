@@ -1,0 +1,77 @@
+.ecosystem-section {
+  overflow: hidden;
+}
+
+.section-subtitle {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.world-map-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.location-node {
+  transform-origin: center;
+  transition: filter 0.3s ease;
+}
+
+.location-node:hover {
+  filter: drop-shadow(0 0 10px currentColor);
+  cursor: pointer;
+}
+
+.map-stats {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.map-stat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.stat-icon {
+  color: var(--color-brand-orange);
+  width: 24px;
+  height: 24px;
+}
+
+.map-stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-diamond);
+  line-height: 1.2;
+}
+
+.map-stat span {
+  font-size: 0.85rem;
+  color: var(--text-silver);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

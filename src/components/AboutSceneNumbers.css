@@ -1,0 +1,59 @@
+.scene-numbers {
+  padding: 15rem 0;
+  background-color: var(--bg-deep-space);
+}
+
+.scene-numbers-row {
+  display: flex;
+  align-items: center;
+  gap: 6rem;
+  margin-bottom: 10rem;
+}
+
+.scene-numbers-row:last-child {
+  margin-bottom: 0;
+}
+
+.scene-numbers-giant {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 15vw, 15rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  /* Override text-gradient to be a bit more subtle for this scale */
+  background: linear-gradient(135deg, #ffffff 0%, var(--text-silver) 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  will-change: transform, clip-path;
+}
+
+.scene-numbers-text {
+  max-width: 400px;
+}
+
+.scene-numbers-label {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--color-brand-blue);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.scene-numbers-desc {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--text-diamond);
+  font-weight: 300;
+}
+
+@media (max-width: 992px) {
+  .scene-numbers-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 8rem;
+  }
+}

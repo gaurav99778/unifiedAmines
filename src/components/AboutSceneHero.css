@@ -1,0 +1,51 @@
+.scene-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-deep-space);
+}
+
+.scene-hero-bg {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform, filter, opacity;
+  z-index: 1;
+}
+
+.scene-hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* Deep, moody cinematic gradient */
+  background: radial-gradient(circle at center, transparent 0%, rgba(4, 11, 20, 0.9) 100%),
+              linear-gradient(to bottom, rgba(4, 11, 20, 0.4) 0%, rgba(4, 11, 20, 0.8) 100%);
+  z-index: 2;
+}
+
+.scene-hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+}
+
+.scene-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 12rem);
+  font-weight: 800;
+  color: var(--text-diamond);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  will-change: transform, opacity, filter;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}

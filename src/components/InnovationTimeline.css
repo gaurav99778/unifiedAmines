@@ -1,0 +1,189 @@
+.timeline-section {
+  background-color: var(--bg-deep-space);
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timeline-header {
+  position: absolute;
+  top: var(--space-md);
+  width: 100%;
+  z-index: 10;
+}
+
+.timeline-scroll-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: calc(50vw - 200px); /* Center the first item */
+}
+
+.timeline-track {
+  display: flex;
+  gap: var(--space-xl);
+  padding-right: calc(50vw - 200px); /* Center the last item */
+  position: relative;
+}
+
+/* Base line */
+.timeline-track-base {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* Connecting Line */
+.timeline-progress-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-brand-orange);
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+  z-index: 2;
+  box-shadow: 0 0 20px var(--glow-orange);
+}
+
+.timeline-item {
+  position: relative;
+  width: 400px;
+  padding: 3rem;
+  flex-shrink: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  /* Alternating heights */
+}
+
+.timeline-item:nth-child(even) {
+  transform: translateY(4rem);
+}
+
+.timeline-item:nth-child(odd) {
+  transform: translateY(-4rem);
+}
+
+.timeline-year {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 900;
+  color: transparent !important; /* Never fill with color */
+  -webkit-text-stroke: 1px rgba(200, 200, 200, calc(0.4 + (var(--proximity, 0) * 0.6)));
+  position: absolute;
+  top: -2rem;
+  right: -1rem;
+  z-index: 0;
+  opacity: calc(0.35 + (var(--proximity, 0) * 0.65)); /* Never disappear, min 35% */
+  transition: transform 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              filter 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              -webkit-text-stroke 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  transform-origin: center center;
+  filter: drop-shadow(0 0 0px rgba(255, 90, 0, 0));
+}
+
+.timeline-item:hover .timeline-year {
+  transform: translateZ(10px);
+}
+
+.timeline-content {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(30px);
+}
+
+.timeline-content h3 {
+  color: var(--color-brand-gold);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-content p {
+  font-size: 1rem;
+  color: var(--text-silver);
+  margin: 0;
+}
+
+.timeline-node {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: var(--bg-deep-space);
+  border: 3px solid var(--color-brand-orange);
+  border-radius: 50%;
+  box-shadow: 0 0 0px var(--glow-orange);
+  z-index: 3;
+  transition: all 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+/* Position nodes on the track */
+.timeline-item:nth-child(even) .timeline-node {
+  top: -4rem; /* Reach up to center line */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.timeline-item:nth-child(odd) .timeline-node {
+  bottom: -4rem; /* Reach down to center line */
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+/* Active Card Elevation */
+.timeline-item {
+  transition: transform 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              box-shadow 0.45s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+.timeline-item.active {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 90, 0, 0.05);
+}
+
+/* Maintain alternating heights while lifting active cards */
+.timeline-item:nth-child(even).active {
+  transform: translateY(calc(4rem - 10px));
+}
+
+.timeline-item:nth-child(odd).active {
+  transform: translateY(calc(-4rem - 10px));
+}
+
+/* Active State Styles */
+.timeline-item.active .timeline-year {
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(255, 90, 0, 1);
+  /* Use drop-shadow on the element so it only shadows the outline stroke, keeping the center perfectly transparent */
+  filter: drop-shadow(0 0 12px rgba(255, 90, 0, 0.8)) drop-shadow(0 0 24px rgba(255, 90, 0, 0.4));
+  transform: translateZ(30px) scale(1.04); /* Slight scale */
+}
+
+.timeline-item.active .timeline-node {
+  background: var(--color-brand-orange);
+  box-shadow: 0 0 15px rgba(255, 90, 0, 0.5), 0 0 30px rgba(255, 90, 0, 0.3);
+  animation: verySubtlePulse 3s infinite ease-in-out;
+}
+
+.timeline-item:nth-child(even).active .timeline-node {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.timeline-item:nth-child(odd).active .timeline-node {
+  transform: translate(-50%, 50%) scale(1.15);
+}
+
+@keyframes verySubtlePulse {
+  0% { box-shadow: 0 0 10px rgba(255, 90, 0, 0.4), 0 0 20px rgba(255, 90, 0, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(255, 90, 0, 0.6), 0 0 25px rgba(255, 90, 0, 0.3); }
+  100% { box-shadow: 0 0 10px rgba(255, 90, 0, 0.4), 0 0 20px rgba(255, 90, 0, 0.2); }
+}

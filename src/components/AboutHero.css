@@ -1,0 +1,103 @@
+.about-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh; 
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-deep-space);
+}
+
+.about-hero-bg {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  z-index: 1;
+}
+
+/* Deep dark overlay (60-70%) as requested */
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(4, 11, 20, 0.9) 0%, rgba(4, 11, 20, 0.7) 40%, rgba(4, 11, 20, 0.4) 100%),
+              linear-gradient(to bottom, rgba(4, 11, 20, 0.2) 0%, rgba(4, 11, 20, 0.8) 100%);
+  z-index: 2;
+}
+
+.about-hero-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.about-hero-content {
+  max-width: 900px;
+  padding-left: 0; /* Align perfectly with container edge */
+}
+
+.about-hero-label {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--color-brand-blue); /* Subtle blue accent */
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.about-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 700; /* Bold but not overly thick */
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+  color: var(--text-diamond);
+}
+
+.about-hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.6;
+  color: var(--text-silver);
+  font-weight: 300;
+  max-width: 650px;
+  margin-bottom: 3.5rem;
+}
+
+.about-hero-cta-wrapper {
+  display: inline-block;
+}
+
+.about-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  color: var(--text-diamond);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.about-hero-cta:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,73 @@
+.typography-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* 100vh as requested */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-deep-space);
+  overflow: hidden;
+}
+
+/* Ambient Glow Effects - No particles, just pure elegant lighting */
+.typo-hero-ambient {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.typo-hero-ambient-blue {
+  width: 60vw;
+  height: 60vh;
+  background: var(--color-brand-blue);
+  top: -10%;
+  left: -10%;
+}
+
+.typo-hero-ambient-orange {
+  width: 50vw;
+  height: 50vh;
+  background: var(--color-brand-orange);
+  bottom: -10%;
+  right: -10%;
+}
+
+.typo-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
+  margin-top: 250px; /* Pushed 150px lower to center visually */
+}
+
+.typo-hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 800;
+  color: var(--text-diamond);
+  letter-spacing: -0.04em;
+  margin: 0;
+  /* Ensure it looks editorial and balanced */
+  margin-bottom: 4rem; /* Increased spacing */
+}
+
+.typo-hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  color: var(--text-silver);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 5rem auto; /* Increased spacing before the button */
+}
+
+.typo-hero-cta {
+  /* Elegant spacing for the button */
+}

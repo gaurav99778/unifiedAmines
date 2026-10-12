@@ -1,0 +1,79 @@
+.scene-pinned {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  background-color: var(--bg-deep-space);
+}
+
+.scene-pinned-left {
+  width: 50vw;
+  position: relative;
+  z-index: 2;
+  /* Massive padding top and bottom to create long scroll area */
+  padding: 50vh 5vw 50vh 5vw; 
+}
+
+.scene-pinned-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60vh; /* Huge gaps between lines */
+}
+
+.scene-pinned-line {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--text-diamond);
+  letter-spacing: -0.02em;
+  will-change: opacity, transform;
+}
+
+.scene-pinned-right {
+  width: 50vw;
+  height: 100vh; /* Fixed height for pinning */
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.scene-pinned-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Subtle dark filter */
+  filter: brightness(0.7) contrast(1.2);
+}
+
+.scene-pinned-image-overlay {
+  position: absolute;
+  inset: 0;
+  /* Gradient to fade cleanly into the deep space background */
+  background: linear-gradient(to right, var(--bg-deep-space) 0%, transparent 20%);
+}
+
+@media (max-width: 992px) {
+  .scene-pinned {
+    flex-direction: column;
+  }
+  
+  .scene-pinned-right {
+    width: 100vw;
+    /* Pinned effect is harder on mobile, usually we just stick it to top */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  
+  .scene-pinned-left {
+    width: 100vw;
+    padding: 20vh 5vw;
+  }
+  
+  .scene-pinned-image-overlay {
+    background: linear-gradient(to bottom, transparent 50%, var(--bg-deep-space) 100%);
+  }
+}

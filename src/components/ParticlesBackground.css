@@ -1,0 +1,26 @@
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1; /* Below content, above background */
+  overflow: hidden;
+  /* Fade out particles at the top so the navbar remains completely clean */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 120px, black 200px);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 120px, black 200px);
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-brand-blue-light) 0%, rgba(10,58,138,0) 70%);
+  opacity: 0.3;
+  filter: blur(2px);
+  will-change: transform, opacity;
+}
+
+.particle.orange {
+  background: radial-gradient(circle, var(--color-brand-orange) 0%, rgba(255,90,0,0) 70%);
+}

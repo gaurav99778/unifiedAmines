@@ -1,0 +1,212 @@
+.unified-principle-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #050505; /* Deep black manifesto background */
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Atmosphere */
+.up-bg-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.up-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(140, 180, 255, 0.4);
+  border-radius: 50%;
+  animation: float-up-particle 15s infinite linear;
+  opacity: 0;
+}
+.up-particle.particle-0 { top: 10%; left: 20%; animation-delay: 0s; }
+.up-particle.particle-1 { top: 60%; left: 85%; animation-delay: -3s; }
+.up-particle.particle-2 { top: 80%; left: 15%; animation-delay: -7s; }
+.up-particle.particle-3 { top: 25%; left: 75%; animation-delay: -11s; }
+.up-particle.particle-4 { top: 50%; left: 45%; animation-delay: -5s; }
+.up-particle.particle-5 { top: 30%; left: 30%; animation-delay: -2s; }
+.up-particle.particle-6 { top: 70%; left: 40%; animation-delay: -9s; }
+.up-particle.particle-7 { top: 40%; left: 60%; animation-delay: -13s; }
+
+@keyframes float-up-particle {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.5; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.up-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.05) 0%, transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Main Container */
+.up-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Words Sequence */
+.up-words-wrapper {
+  position: relative;
+  width: 100%;
+  height: 24rem; /* Increased to accommodate two lines and generous spacing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px; /* Push the entire heading block downward */
+}
+
+.up-word-group {
+  position: absolute;
+  width: 100%;
+  max-width: 1100px; /* Constrain phrase width */
+  margin: 0 auto; /* Center horizontal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.up-word-group-final {
+  margin-top: 2.5rem; /* Position final heading slightly lower */
+  transform: translateY(-115px); /* Moved down by 35px to tighten composition */
+}
+
+.up-word {
+  font-size: clamp(3rem, 6.5vw, 6.5rem); /* ~6.3rem - 6.6rem on desktop */
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  line-height: 1.22; /* Increased by ~13% for more breathing room */
+  text-align: center;
+  letter-spacing: 0.03em; /* Wider spacing for an elegant, tech aesthetic */
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.up-word-final {
+  font-size: clamp(2.4rem, 5.2vw, 5.2rem); /* Reduced by ~20% */
+}
+
+.up-word-line {
+  display: block;
+}
+
+/* split-type wrap */
+.up-word .char {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.up-word-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 150%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.15) 0%, transparent 60%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.up-line {
+  width: 100%;
+  height: 2px;
+  background-color: #ff7a00;
+  margin-top: 1rem;
+}
+
+.up-line-final {
+  width: 65%; /* Shortened to 65% for a premium, intentional look */
+}
+
+/* Finale Components */
+.up-finale {
+  margin-top: 3.5rem; /* Reduced to move message ~48px upward closer to divider */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transform: translateY(-145px); /* Moved up by 65px to close the gap */
+}
+
+.up-sentence {
+  font-size: 1.6rem; /* Increased by ~14% */
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.85); /* Slightly brighter for readability */
+  letter-spacing: 0.05em;
+  margin-bottom: 0; /* Reduced to pull signature naturally beneath the quote */
+  /* Will be translated by GSAP */
+  transform: translateY(20px);
+  max-width: 900px;
+  line-height: 1.65; /* Increased for better breathing room */
+}
+
+.up-signature-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.up-signature-svg {
+  width: 250px;
+  height: auto;
+  margin-bottom: 1rem; /* Reduced slightly to group with title */
+  /* For smooth writing effect */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.up-title-wrapper {
+  text-align: center;
+}
+
+.up-name {
+  font-size: 1.25rem; /* Increased by ~15% */
+  font-weight: 600; /* Increased weight */
+  color: white;
+  margin-bottom: 0.3rem; /* Comfortable spacing */
+}
+
+.up-title {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75); /* Brighter and easier to read */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .up-word {
+    font-size: clamp(3rem, 15vw, 6rem);
+  }
+  .up-sentence {
+    font-size: 1.2rem;
+    padding: 0 2rem;
+  }
+}
