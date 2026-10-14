@@ -1,143 +1,156 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SplitType from 'split-type';
+import { 
+  Pill, 
+  Sprout, 
+  Sparkles, 
+  Layers, 
+  Droplets, 
+  Scissors, 
+  ShieldCheck, 
+  Factory,
+  Globe2
+} from 'lucide-react';
 import './PoweringIndustries.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const INDUSTRIES_DATA = [
+  { name: 'Pharmaceuticals', icon: Pill, tag: 'API Intermediate' },
+  { name: 'Agrochemicals', icon: Sprout, tag: 'Surfactant Systems' },
+  { name: 'Personal Care', icon: Sparkles, tag: 'Cationic Conditioning' },
+  { name: 'Paints & Coatings', icon: Layers, tag: 'Crosslinking Agents' },
+  { name: 'Water Treatment', icon: Droplets, tag: 'Flocculation Chemistry' },
+  { name: 'Textile Processing', icon: Scissors, tag: 'Auxiliary Esters' },
+  { name: 'Home Care & Biocides', icon: ShieldCheck, tag: 'Antimicrobial Quats' },
+  { name: 'Industrial Synthesis', icon: Factory, tag: 'Bulk Amine Catalysts' }
+];
+
+const MARKETS_DATA = [
+  { name: 'India (HQ)', flag: '🇮🇳', region: 'Domestic Manufacturing' },
+  { name: 'Germany', flag: '🇩🇪', region: 'European Union' },
+  { name: 'United States', flag: '🇺🇸', region: 'North America' },
+  { name: 'United Arab Emirates', flag: '🇦🇪', region: 'Middle East' },
+  { name: 'Singapore', flag: '🇸🇬', region: 'Asia-Pacific' },
+  { name: 'Saudi Arabia', flag: '🇸🇦', region: 'GCC Terminal' },
+  { name: 'Brazil', flag: '🇧🇷', region: 'Latin America' },
+  { name: 'South Africa', flag: '🇿🇦', region: 'African Trade Corridor' },
+  { name: 'Japan', flag: '🇯🇵', region: 'East Asia' },
+  { name: 'Egypt', flag: '🇪🇬', region: 'North Africa' }
+];
+
 export default function PoweringIndustries() {
   const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const row1Ref = useRef(null);
-  const row2Ref = useRef(null);
-
-  const countries = [
-    "INDIA", "UAE", "SAUDI ARABIA", "SINGAPORE", 
-    "MALAYSIA", "EGYPT", "SOUTH AFRICA", "BRAZIL"
-  ];
-
-  const industries = [
-    "PHARMACEUTICALS", "AGROCHEMICALS", "PERSONAL CARE", 
-    "PAINTS & COATINGS", "TEXTILES", "WATER TREATMENT", 
-    "HOME CARE", "INDUSTRIAL CHEMICALS"
-  ];
+  const headerRef = useRef(null);
 
   useLayoutEffect(() => {
-    let splitTitle;
-
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const section = sectionRef.current;
-      const title = titleRef.current;
-      
-      // Split text into words and lines
-      splitTitle = new SplitType(title, { types: 'lines,words' });
-      
-      // Initial states via JS so CSS defaults to visible (fixes hydration/refresh bugs)
-      gsap.set(splitTitle.words, { y: '100%', opacity: 0, filter: 'blur(5px)' });
-      gsap.set('.powering-line', { width: '0%' });
-      
-      const marquee1 = gsap.to(row1Ref.current, {
-        xPercent: -50,
-        ease: "none",
-        duration: 35, 
-        repeat: -1
-      });
+      const header = headerRef.current;
+      if (!section || !header) return;
 
-      const marquee2 = gsap.fromTo(row2Ref.current, 
-        { xPercent: -50 },
-        {
-          xPercent: 0,
-          ease: "none",
-          duration: 40,
-          repeat: -1
-        }
-      );
+      const badge = header.querySelector('.powering-badge');
+      const title = header.querySelector('.powering-title');
+      const desc = header.querySelector('.powering-desc');
+      const lines = header.querySelectorAll('.powering-rule');
+      const marquees = section.querySelector('.powering-marquee-container');
 
-      // Entrance Animation Timeline - triggers slightly later when scrolling
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 75%', // Starts later when section is 25% into viewport
+          start: 'top 80%',
+          toggleActions: 'play none none none'
         }
       });
 
-      tl.to('.powering-line', {
-        width: '100%',
-        duration: 1.2,
-        stagger: 0.2, // Animate top line, then bottom line
-        ease: "power3.inOut"
-      })
-      .to(splitTitle.words, {
-        y: '0%',
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1,
-        stagger: 0.1,
-        ease: "power3.out"
-      }, "-=0.8");
+      tl.fromTo(badge, 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
+      )
+      .fromTo(title, 
+        { opacity: 0, y: 25 }, 
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 
+        '-=0.3'
+      )
+      .fromTo(desc, 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 
+        '-=0.4'
+      )
+      .fromTo(lines, 
+        { scaleX: 0 }, 
+        { scaleX: 1, duration: 1.0, ease: 'power3.inOut' }, 
+        '-=0.5'
+      )
+      .fromTo(marquees, 
+        { opacity: 0, y: 30 }, 
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 
+        '-=0.5'
+      );
 
     }, sectionRef);
 
-    // Call ScrollTrigger.refresh() after the layout is fully ready
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 150);
-
-    return () => {
-      if (splitTitle) splitTitle.revert();
-      ctx.revert(); 
-      clearTimeout(timer);
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section className="powering-section" ref={sectionRef}>
-      <div className="powering-header">
-        <div className="powering-line"></div>
-        <h2 className="powering-title" ref={titleRef}>
-          Powering Industries<br />Worldwide.
+      {/* Soft Ambient Radial Light */}
+      <div className="powering-ambient-glow" />
+
+      <div className="powering-header" ref={headerRef}>
+        <div className="powering-badge">
+          <Globe2 size={14} className="badge-icon" />
+          <span>CROSS-SECTOR DEPLOYMENT</span>
+        </div>
+
+        <div className="powering-rule top-rule"></div>
+
+        <h2 className="powering-title">
+          Powering Industries <span className="text-gradient">Worldwide.</span>
         </h2>
-        <div className="powering-line"></div>
+
+        <p className="powering-desc">
+          Precision amine chemistry and surfactant formulations engineered for mission-critical reliability 
+          across 8 foundational global industries.
+        </p>
+
+        <div className="powering-rule bottom-rule"></div>
       </div>
 
       <div className="powering-marquee-container">
-        {/* First Row: Countries */}
-        <div className="marquee-row" ref={row1Ref}>
-          <div className="marquee-content">
-            {countries.map((item, idx) => (
-              <React.Fragment key={`c1-${idx}`}>
-                <span className="marquee-item">{item}</span>
-                <span className="marquee-separator">◇</span>
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="marquee-content">
-            {countries.map((item, idx) => (
-              <React.Fragment key={`c2-${idx}`}>
-                <span className="marquee-item">{item}</span>
-                <span className="marquee-separator">◇</span>
-              </React.Fragment>
-            ))}
+        {/* Track 1: Strategic Industries (Leftwards Continuous Flow) */}
+        <div className="marquee-wrapper">
+          <div className="marquee-track track-left">
+            {[...INDUSTRIES_DATA, ...INDUSTRIES_DATA].map((ind, i) => {
+              const Icon = ind.icon;
+              return (
+                <div key={`ind-${i}`} className="industry-capsule glass-panel">
+                  <div className="capsule-icon-box">
+                    <Icon size={18} />
+                  </div>
+                  <div className="capsule-info">
+                    <span className="capsule-name">{ind.name}</span>
+                    <span className="capsule-tag">{ind.tag}</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Second Row: Industries */}
-        <div className="marquee-row" ref={row2Ref}>
-          <div className="marquee-content">
-            {industries.map((item, idx) => (
-              <React.Fragment key={`i1-${idx}`}>
-                <span className="marquee-item">{item}</span>
-                <span className="marquee-separator">◇</span>
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="marquee-content">
-            {industries.map((item, idx) => (
-              <React.Fragment key={`i2-${idx}`}>
-                <span className="marquee-item">{item}</span>
-                <span className="marquee-separator">◇</span>
-              </React.Fragment>
+        {/* Track 2: Global Markets (Rightwards Continuous Flow) */}
+        <div className="marquee-wrapper">
+          <div className="marquee-track track-right">
+            {[...MARKETS_DATA, ...MARKETS_DATA].map((mkt, i) => (
+              <div key={`mkt-${i}`} className="market-capsule glass-panel">
+                <span className="market-flag">{mkt.flag}</span>
+                <div className="market-info">
+                  <span className="market-name">{mkt.name}</span>
+                  <span className="market-region">{mkt.region}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>

@@ -1,121 +1,274 @@
+/* Powering Industries Section */
 .powering-section {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   overflow: hidden;
-  padding: 8rem 0;
-  z-index: 10;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 86, 179, 0.12), transparent 50%),
-    radial-gradient(circle at 85% 85%, rgba(255, 123, 0, 0.08), transparent 50%);
+  padding: clamp(4.5rem, 7vw, 7rem) 0;
+  background-color: var(--bg-deep-space);
+  z-index: 5;
 }
 
+/* Ambient Radial Glow */
+.powering-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(10, 58, 138, 0.12) 0%, rgba(255, 90, 0, 0.05) 50%, transparent 75%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 0;
+}
 
+/* Header */
 .powering-header {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 6rem;
-  padding: 0 2rem;
-  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto 3.5rem;
+  padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1.5rem;
+  z-index: 2;
 }
 
-.powering-line {
-  width: 0;
+.powering-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 9999px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #38BDF8;
+  backdrop-filter: blur(12px);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.15);
+}
+
+.powering-badge .badge-icon {
+  color: #38BDF8;
+}
+
+.powering-rule {
+  width: 100%;
+  max-width: 650px;
   height: 1px;
-  background: var(--color-brand-blue, #0056b3);
-  opacity: 0.5;
-  margin-bottom: 2rem;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.35), transparent);
+  transform-origin: center;
+}
+
+.top-rule {
+  margin-bottom: 1.75rem;
+}
+
+.bottom-rule {
+  margin-top: 1.75rem;
 }
 
 .powering-title {
-  font-family: var(--font-display, inherit);
-  font-size: clamp(4rem, 7vw, 6rem);
-  font-weight: 500;
-  line-height: 1.05;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-diamond);
   margin: 0;
-  color: #ffffff;
 }
 
-/* SplitType adjustments for masking words */
-.powering-title .line {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.powering-title .word {
-  transform: translateY(100%);
-  will-change: transform, opacity, filter;
+.powering-desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+  color: var(--text-silver);
+  line-height: 1.6;
+  max-width: 620px;
+  margin-top: 1rem;
 }
 
+/* Marquee Container */
 .powering-marquee-container {
   position: relative;
-  width: 100vw;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  will-change: transform, opacity;
+  gap: 1.25rem;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  z-index: 2;
 }
 
-.marquee-row {
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
   display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 1.25rem;
   width: max-content;
-  align-items: center;
+  will-change: transform;
 }
 
-.marquee-content {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
+/* Track Left (Industries) */
+.track-left {
+  animation: marquee-scroll-left 42s linear infinite;
 }
 
-.marquee-item {
-  font-family: var(--font-display, inherit);
-  font-size: clamp(30px, 5vw, 60px);
-  font-weight: 600; /* SemiBold */
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.3);
-  padding: 0 2rem;
-  cursor: default;
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+/* Track Right (Markets) */
+.track-right {
+  animation: marquee-scroll-right 45s linear infinite;
+}
+
+.powering-marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Industry Capsule */
+.industry-capsule {
   display: inline-flex;
   align-items: center;
-  will-change: transform, opacity, color, text-shadow, letter-spacing;
+  gap: 0.9rem;
+  padding: 0.85rem 1.4rem;
+  background: rgba(18, 18, 24, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: default;
+  white-space: nowrap;
 }
 
-.marquee-separator {
-  color: var(--color-brand-blue, #0056b3);
-  font-size: clamp(16px, 2vw, 24px);
-  opacity: 0.6;
-  text-shadow: 0 0 10px rgba(0, 86, 179, 0.8);
-  margin: 0 1rem;
+.industry-capsule:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 90, 0, 0.4);
+  background: rgba(25, 25, 35, 0.85);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6),
+              0 0 15px rgba(255, 90, 0, 0.15);
 }
 
-/* Hover effects */
-.marquee-row:hover .marquee-item {
-  opacity: 0.1;
+.capsule-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 90, 0, 0.12);
+  color: var(--color-brand-orange);
+  border: 1px solid rgba(255, 90, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
-.marquee-row .marquee-item:hover {
-  opacity: 1;
-  color: #ffffff;
-  transform: scale(1.08);
-  letter-spacing: 0.15em;
-  text-shadow: 0 0 30px rgba(0, 86, 179, 0.6);
-  z-index: 10;
+.industry-capsule:hover .capsule-icon-box {
+  background: var(--color-brand-orange);
+  color: #FFFFFF;
+  box-shadow: 0 0 12px var(--color-brand-orange);
+}
+
+.capsule-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.capsule-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-diamond);
+  line-height: 1.2;
+}
+
+.capsule-tag {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+}
+
+/* Market Capsule */
+.market-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1.25rem;
+  background: rgba(14, 16, 22, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+  backdrop-filter: blur(14px);
+  transition: all 0.3s ease;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.market-capsule:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(20, 24, 34, 0.85);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.5),
+              0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+.market-flag {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.market-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.market-name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-diamond);
+}
+
+.market-region {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #38BDF8;
+}
+
+@media (max-width: 768px) {
+  .powering-rule {
+    display: none;
+  }
+
+  .powering-marquee-container {
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+
+  .industry-capsule {
+    padding: 0.7rem 1.1rem;
+  }
 }

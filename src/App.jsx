@@ -57,14 +57,14 @@ function App() {
 
     // Initialize Lenis ONLY after preloader is finished
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
+      mouseMultiplier: 1.15,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
@@ -72,15 +72,16 @@ function App() {
 
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const updateLenis = (time) => {
       lenis.raf(time * 1000);
-    });
+    };
 
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add(updateLenis);
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      gsap.ticker.remove(updateLenis);
     };
   }, [isPreloading]);
 

@@ -112,7 +112,7 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="navbar-cta">
-          <MagneticButton href="/contact">
+          <MagneticButton href="/contact" className="navbar-btn">
             Request Quote
           </MagneticButton>
         </div>

@@ -13,6 +13,7 @@ export default function HomeBackground() {
       {/* Hero Lights */}
       <div className="ambient-light light-hero-blue"></div>
       <div className="ambient-light light-hero-orange"></div>
+      <div className="ambient-light light-hero-3d-core"></div>
 
       {/* Footer Light */}
       <div className="ambient-light light-footer-orange"></div>

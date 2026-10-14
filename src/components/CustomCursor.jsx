@@ -6,28 +6,11 @@ export default function CustomCursor() {
   const followerRef = useRef(null);
   const [followerState, setFollowerState] = useState(''); 
   const [isIdle, setIsIdle] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
-    if (!followerRef.current) return;
-    
-    let targetOpacity = 0;
-    if (isVisible) {
-      if (followerState === 'state-button') targetOpacity = 1;
-      else if (isIdle) targetOpacity = 0.25;
-      else targetOpacity = 0.9;
-    }
-    
-    gsap.to(followerRef.current, { 
-      opacity: targetOpacity, 
-      duration: 0.3, 
-      ease: 'power2.out',
-      overwrite: 'auto' 
-    });
-  }, [isVisible, isIdle, followerState]);
-  
-  useEffect(() => {
     const follower = followerRef.current;
+    if (!follower) return;
     
     // Anchor to center and enable GPU acceleration explicitly
     gsap.set(follower, { xPercent: -50, yPercent: -50, force3D: true });
@@ -60,10 +43,10 @@ export default function CustomCursor() {
     };
 
     const onMouseMove = (e) => {
-      setIsVisible(prev => {
-        if (!prev) return true;
-        return prev;
-      });
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        gsap.to(follower, { opacity: 0.9, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+      }
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       resetIdle();
@@ -84,7 +67,6 @@ export default function CustomCursor() {
 
     const onClick = () => {
       resetIdle();
-      // Quick scale down to 80% and back, no ripple, no flashy effects
       gsap.fromTo(follower, 
         { scaleX: 0.8, scaleY: 0.8 },
         { scaleX: 1, scaleY: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' }
@@ -113,7 +95,7 @@ export default function CustomCursor() {
         return;
       }
 
-      // Text / Cards - Keep default size (no enlargement)
+      // Text / Cards - Keep default size
       setFollowerState('');
     };
 
@@ -121,31 +103,40 @@ export default function CustomCursor() {
       setFollowerState('');
     };
 
-    const onMouseEnterDoc = () => setIsVisible(true);
-    const onMouseLeaveDoc = () => setIsVisible(false);
+    const onMouseEnterDoc = () => {
+      isVisibleRef.current = true;
+      gsap.to(follower, { opacity: 0.9, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mousedown', onClick);
-    window.addEventListener('mouseover', onMouseOver);
-    window.addEventListener('mouseout', onMouseOut);
+    const onMouseLeaveDoc = () => {
+      isVisibleRef.current = false;
+      gsap.to(follower, { opacity: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mousedown', onClick, { passive: true });
+    window.addEventListener('mouseover', onMouseOver, { passive: true });
+    window.addEventListener('mouseout', onMouseOut, { passive: true });
     document.documentElement.addEventListener('mouseenter', onMouseEnterDoc);
     document.documentElement.addEventListener('mouseleave', onMouseLeaveDoc);
     
     resetIdle();
 
     // Fast, smooth, responsive spring lerp (no elasticity/bounce)
-    gsap.ticker.add(() => {
-      // 0.25 is fast enough to feel very responsive without lagging, but remains smooth
+    const updateCursor = () => {
       pos.x += (mouse.x - pos.x) * 0.25;
       pos.y += (mouse.y - pos.y) * 0.25;
 
       setX(pos.x);
       setY(pos.y);
-    });
+    };
+
+    gsap.ticker.add(updateCursor);
 
     return () => {
       clearTimeout(idleTimeout);
       clearTimeout(moveTimeout);
+      gsap.ticker.remove(updateCursor);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mousedown', onClick);
       window.removeEventListener('mouseover', onMouseOver);

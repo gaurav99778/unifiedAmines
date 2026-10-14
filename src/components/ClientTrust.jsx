@@ -1,190 +1,81 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SplitType from 'split-type';
+import { Star, ShieldCheck, Quote, CheckCircle2 } from 'lucide-react';
 import './ClientTrust.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const StarIcon = () => (
-  <svg className="editorial-star" viewBox="0 0 24 24" fill="var(--color-brand-orange)" width="16" height="16">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-  </svg>
-);
+const TESTIMONIALS = [
+  {
+    quote: "Their precision in manufacturing and consistency across batches has made them an indispensable part of our global supply chain.",
+    role: "Procurement Director",
+    industry: "Specialty Chemical Manufacturer",
+    country: "India",
+    flag: "🇮🇳",
+    bgWord: "RELIABILITY",
+    badge: "Tier-1 Supply Partner"
+  },
+  {
+    quote: "A true partner who understands that in this industry, there is absolutely no margin for error or batch-to-batch variance.",
+    role: "Head of Operations",
+    industry: "Pharmaceuticals & APIs",
+    country: "Germany",
+    flag: "🇩🇪",
+    bgWord: "PRECISION",
+    badge: "EU REACH Verified"
+  },
+  {
+    quote: "We don't just buy chemicals from them; we rely on their engineering standards to guarantee our own finished product quality.",
+    role: "Chief Technical Officer",
+    industry: "Agrochemicals & Surfactants",
+    country: "Brazil",
+    flag: "🇧🇷",
+    bgWord: "TRUST",
+    badge: "Multi-Year Allocation"
+  }
+];
 
 export default function ClientTrust() {
   const sectionRef = useRef(null);
 
-  const testimonials = [
-    {
-      quote: <>Their precision in manufacturing and consistency across batches<br/>has made them an indispensable part of our supply chain.</>,
-      role: "Procurement Director",
-      industry: "Specialty Chemical Manufacturer",
-      country: "India",
-      bgWord: "RELIABILITY"
-    },
-    {
-      quote: <>A true partner who understands that in this industry,<br/>there is absolutely no margin for error.</>,
-      role: "Head of Operations",
-      industry: "Pharmaceuticals",
-      country: "Germany",
-      bgWord: "PRECISION"
-    },
-    {
-      quote: <>We don't just buy chemicals from them; we rely on their<br/>engineering standards to guarantee our own product quality.</>,
-      role: "Chief Technical Officer",
-      industry: "Agrochemicals",
-      country: "Brazil",
-      bgWord: "TRUST"
-    }
-  ];
-
   useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const section = sectionRef.current;
-      
-      const headingText = section.querySelector('.editorial-heading');
-      const headingLines = section.querySelectorAll('.editorial-heading-line');
-      const headingWrapper = section.querySelector('.editorial-heading-wrapper');
-      
-      // GSAP Initial Setup (Ensures default visible state is hidden safely before animation)
-      gsap.set(headingLines, { scaleX: 0 });
-      gsap.set('.editorial-quote-container', { opacity: 0, scale: 0.98 });
-      gsap.set('.editorial-bg-word', { opacity: 0, y: 50 });
-      gsap.set('.editorial-progress-line', { scaleX: 0 });
-      gsap.set('.editorial-attribution', { y: 20, opacity: 0 });
-      gsap.set('.editorial-star', { opacity: 0.2, filter: 'drop-shadow(0 0 0px var(--color-brand-orange))' });
+      if (!section) return;
 
-      const splitHeading = new SplitType(headingText, { types: 'lines,words' });
-      gsap.set(splitHeading.words, { yPercent: 120, opacity: 0, filter: 'blur(10px)' });
+      const badge = section.querySelector('.trust-badge');
+      const heading = section.querySelector('.trust-heading');
+      const subtitle = section.querySelector('.trust-desc');
+      const cards = section.querySelectorAll('.editorial-trust-card');
 
-      const quoteContainers = gsap.utils.toArray('.editorial-quote-container', section);
-      const bgWords = gsap.utils.toArray('.editorial-bg-word', section);
-      const progressLines = gsap.utils.toArray('.editorial-progress-line', section);
-
-      const splitQuotes = quoteContainers.map(q => {
-        const textElement = q.querySelector('.editorial-quote-text');
-        const split = new SplitType(textElement, { types: 'lines,words' });
-        gsap.set(split.words, { yPercent: 120, opacity: 0, filter: 'blur(8px)', color: 'rgba(255, 255, 255, 0.3)' });
-        return split;
-      });
-
-      // 1. Entrance Animation - Starts almost immediately when entering viewport
-      const enterTl = gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 95%',
+          start: 'top 80%',
           toggleActions: 'play none none none'
         }
       });
 
-      enterTl.to(headingLines, {
-        scaleX: 1,
-        duration: 1.5,
-        stagger: 0.2,
-        ease: 'power3.inOut'
-      })
-      .to(splitHeading.words, {
-        yPercent: 0,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1.2,
-        stagger: 0.1,
-        ease: 'power3.out'
-      }, "-=0.8");
-
-      // 2. Pinned Scrub Sequence
-      const scrubTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          pin: true,
-          scrub: 1,
-          start: 'top top',
-          end: '+=3000' // Reduced distance to speed up flow
-        }
-      });
-
-      // Hide the initial heading
-      scrubTl.to(headingWrapper, {
-        y: -100,
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut'
-      });
-
-      // Sequence the testimonials
-      testimonials.forEach((testi, index) => {
-        const quoteEl = quoteContainers[index];
-        const bgWordEl = bgWords[index];
-        const attributionEl = quoteEl.querySelector('.editorial-attribution');
-        const progressLineEl = progressLines[index];
-        const stars = quoteEl.querySelectorAll('.editorial-star');
-        const splitQuote = splitQuotes[index];
-
-        // Fade in Background Word with very slow upward parallax
-        scrubTl.fromTo(bgWordEl, 
-          { opacity: 0, y: 50 },
-          { opacity: 1, y: -50, duration: 3, ease: 'none' }, 
-          "-=0.5" 
-        );
-
-        // Reveal Quote Container & subtle scale from 0.98 -> 1
-        scrubTl.to(quoteEl, { opacity: 1, scale: 1, duration: 0.5 }, "<");
-        
-        // Reveal Quote Text Words
-        scrubTl.to(splitQuote.words, {
-          yPercent: 0,
-          opacity: 1,
-          filter: 'blur(0px)',
-          color: '#ffffff',
-          duration: 1,
-          stagger: 0.05,
-          ease: 'power2.out'
-        }, "<0.2");
-
-        // Stagger Stars
-        scrubTl.to(stars, {
-          opacity: 1,
-          filter: 'drop-shadow(0 0 4px var(--color-brand-orange))',
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'power2.out'
-        }, "<0.4");
-
-        // Reveal Attribution
-        scrubTl.to(attributionEl, {
-          opacity: 0.6,
-          y: 0,
-          duration: 0.5,
-          ease: 'power2.out'
-        }, "-=0.2");
-
-        // Animate the progress line (divider) as user reads
-        scrubTl.to(progressLineEl, {
-          scaleX: 1,
-          duration: 0.8,
-          ease: 'none'
-        });
-
-        // Fade out entire block and Background Word (only for non-final testimonials)
-        if (index < testimonials.length - 1) {
-          scrubTl.to([quoteEl, bgWordEl, progressLineEl], {
-            y: -50,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.inOut'
-          });
-        } else {
-          // Final Quote specific behavior
-          // Do NOT fade out. Keep it visible so it scrolls naturally up into the next section.
-          // Add a dummy duration so it remains pinned long enough for the user to read it before unpinning.
-          scrubTl.to({}, { duration: 1 });
-        }
-      });
-
-      // Synchronize GSAP with Lenis after all layout operations are completed
-      // to fix any delayed triggers
-      ScrollTrigger.refresh();
+      tl.fromTo(badge, 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
+      )
+      .fromTo(heading, 
+        { opacity: 0, y: 25 }, 
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 
+        '-=0.3'
+      )
+      .fromTo(subtitle, 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 
+        '-=0.4'
+      )
+      .fromTo(cards, 
+        { opacity: 0, y: 45, scale: 0.97 }, 
+        { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 0.8, ease: 'power3.out' }, 
+        '-=0.4'
+      );
 
     }, sectionRef);
 
@@ -193,54 +84,66 @@ export default function ClientTrust() {
 
   return (
     <section className="editorial-section" ref={sectionRef}>
-      <div className="editorial-container">
+      {/* Ambient background glows */}
+      <div className="trust-ambient-glow" />
 
-        {/* Layer 1: Background Words */}
-        <div className="editorial-bg-layer">
-          {testimonials.map((t, i) => (
-            <div 
-              key={`bg-${i}`} 
-              className="editorial-bg-word"
-            >
-              <div className="editorial-bg-word-inner">{t.bgWord}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Layer 2: Heading */}
-        <div className="editorial-heading-layer">
-          <div className="editorial-heading-wrapper">
-            <div className="editorial-heading-line"></div>
-            <h2 className="editorial-heading">
-              BUILT ON<br />
-              LONG-TERM PARTNERSHIPS.
-            </h2>
-            <div className="editorial-heading-line"></div>
+      <div className="container trust-container">
+        
+        {/* Header */}
+        <div className="trust-header text-center">
+          <div className="trust-badge">
+            <ShieldCheck size={14} className="badge-icon" />
+            <span>ENTERPRISE VALIDATION</span>
           </div>
+
+          <h2 className="trust-heading">
+            Built on <span className="text-gradient">Long-Term Partnerships.</span>
+          </h2>
+
+          <p className="trust-desc">
+            Decades of analytical chromatography purity and continuous supply reliability,
+            verified by procurement leaders worldwide.
+          </p>
         </div>
 
-        {/* Layer 3: Testimonials */}
-        <div className="editorial-testimonial-layer">
-          {testimonials.map((t, i) => (
-            <div 
-              key={`quote-${i}`} 
-              className="editorial-quote-container"
-            >
-              <div className="editorial-quote-mark">“</div>
-              
-              <p className="editorial-quote-text">{t.quote}</p>
-              
-              <div className="editorial-stars-container">
-                <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
+        {/* 3 Editorial Testimonial Bento Cards */}
+        <div className="editorial-cards-grid">
+          {TESTIMONIALS.map((t, idx) => (
+            <div key={`testimonial-${idx}`} className="editorial-trust-card glass-panel">
+              {/* Background Pillar Watermark */}
+              <div className="card-bg-watermark">{t.bgWord}</div>
+
+              {/* Card Top: 5 Stars + Verified Badge */}
+              <div className="card-top-row">
+                <div className="stars-row">
+                  {[...Array(5)].map((_, sIdx) => (
+                    <Star key={sIdx} size={15} className="star-icon" fill="var(--color-brand-orange)" />
+                  ))}
+                </div>
+                <span className="partner-verified-badge">
+                  <CheckCircle2 size={12} className="check-icon" />
+                  {t.badge}
+                </span>
               </div>
 
-              <div className="editorial-attribution">
-                <span className="editorial-role">{t.role}</span>
-                <span className="editorial-industry">{t.industry}</span>
-                <span className="editorial-country">{t.country}</span>
+              {/* Quotation Mark & Quote */}
+              <div className="quote-body">
+                <Quote size={28} className="quote-mark-icon" />
+                <p className="quote-text">"{t.quote}"</p>
               </div>
-              
-              <div className="editorial-progress-line"></div>
+
+              {/* Card Bottom Attribution */}
+              <div className="card-attribution-row">
+                <div className="attribution-meta">
+                  <strong className="client-role">{t.role}</strong>
+                  <span className="client-industry">{t.industry}</span>
+                </div>
+                <div className="client-country-pill">
+                  <span className="flag-emoji">{t.flag}</span>
+                  <span className="country-name">{t.country}</span>
+                </div>
+              </div>
+
             </div>
           ))}
         </div>
